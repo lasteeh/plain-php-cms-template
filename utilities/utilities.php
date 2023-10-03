@@ -27,25 +27,3 @@ function createCustomServerRequestURI()
 // make it immutable
 // and make it globally accessible
 define('SERVER_REQUEST_URI', createCustomServerRequestURI());
-
-// make SERVER_REQUEST_URI into an array,
-// split into parts easily usable for determining controller, action, and parameters
-function createCustomRequestURI()
-{
-  $request_uri = ltrim(SERVER_REQUEST_URI, '/');
-  $request_uri_parts = explode('/', $request_uri);
-  $requested_controller = $request_uri_parts[0];
-  $requested_action = isset($request_uri_parts[1]) ? $request_uri_parts[1] : '';
-  $requested_parameters = array_slice($request_uri_parts, 2);
-
-  return [
-    'requested_controller' => $requested_controller,
-    'requested_action' => $requested_action,
-    'requested_parameters' => $requested_parameters,
-  ];
-}
-
-// put the newly created custom request uri in a more consistent variable format
-// make it immutable
-// and make it globally accessible
-define('REQUEST_URI', createCustomRequestURI());
