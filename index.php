@@ -2,8 +2,8 @@
 
 // initialize dependencies
 require_once 'config.php';
-require_once 'utilities/utilities.php';
 require_once 'routes.php';
+require_once 'utilities/utilities.php';
 
 // for debugging (delete on polish)
 echo nl2br(PHP_EOL .  'index.php running');
