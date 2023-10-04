@@ -29,18 +29,14 @@ define('ROUTES', [
     'POST' => ['controller' => 'images@create']
   ],
   '/images/new' => [
-    'GET' => ['controller' => 'images@new']
+    'GET' => ['controller' => 'images@new'],
   ],
   '/images/:id' => [
-    'GET' => ['controller' => 'images@show']
+    'GET' => ['controller' => 'images@show'],
+    'PATCH' => ['controller' => 'images@update'],
+    'DELETE' => ['controller' => 'images@delete'],
   ],
   '/images/:id/edit' => [
-    'GET' => ['controller' => 'images@edit']
-  ],
-  '/images/:id' => [
-    'PATCH' => ['controller' => 'images@update']
-  ],
-  '/images/:id/delete' => [
-    'DELETE' => ['controller' => 'images@delete']
+    'GET' => ['controller' => 'images@edit'],
   ],
 ]);

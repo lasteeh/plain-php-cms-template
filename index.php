@@ -23,10 +23,15 @@ foreach (ROUTES as $route => $methods) {
     echo nl2br(PHP_EOL . 'route info http method: ' . $http_method);
 
     $pattern = str_replace('/', '\/', $route);
-    $pattern = '#^' . preg_replace('/:([^\s\/]+)/', '/(\d+)/', $pattern) . '$#';
+    $pattern = '#^' . preg_replace('/:([^\s\/]+)/', '([^\/]+)', $pattern) . '$#';
+
 
     if (preg_match($pattern, SERVER_REQUEST_URI, $matches) && HTTP_METHOD === $http_method) {
       echo nl2br(PHP_EOL . ' - MATCH FOUNDDDDDDDDDD!!!');
+
+      foreach ($matches as $key => $match) {
+        echo nl2br(PHP_EOL . 'match' . $key . ': ' . $match);
+      }
 
       list($controllername, $controlleraction) = explode('@', $routeinfo['controller']);
 
