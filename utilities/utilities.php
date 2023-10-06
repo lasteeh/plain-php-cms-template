@@ -1,7 +1,7 @@
 <?php
 
 // for debugging (delete on polish)
-echo nl2br(PHP_EOL .  'utilities.php initiated');
+// echo nl2br(PHP_EOL .  'utilities.php initiated');
 
 
 // create a custom $_SERVER['REQUEST_URI']
@@ -9,7 +9,7 @@ function createCustomServerRequestURI($root_url, $server_request_uri)
 {
   // remove the scheme (http/https) and host part from the domain
   $domain_parts = parse_url($root_url);
-  $domain_path = isset($domain_parts['path']) ? $domain_parts['path'] : '';
+  $domain_path = $domain_parts['path'] ?? '';
 
   $request_uri = $server_request_uri;
 
@@ -53,7 +53,7 @@ function matchRoutesAndCollectData($server_http_method, $server_request_uri, $co
             'name' => $controller_name,
             'action' => $controller_action,
           ],
-          'route_parameter' => isset($matches[1]) ? $matches[1] : null,
+          'route_parameter' => $matches[1] ?? null,
         ];
       }
     }

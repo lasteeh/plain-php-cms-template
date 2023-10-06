@@ -1,7 +1,7 @@
 <?php
 
 // for debugging (delete on polish)
-echo nl2br(PHP_EOL .  'config.php initiated');
+// echo nl2br(PHP_EOL .  'config.php initiated');
 
 // set the root directory of the app
 define('ROOT_PATH', __DIR__);
