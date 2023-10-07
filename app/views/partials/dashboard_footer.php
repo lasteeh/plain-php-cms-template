@@ -1,0 +1,1 @@
+<footer>dashboard footer</footer>

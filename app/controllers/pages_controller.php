@@ -8,17 +8,17 @@ class PagesController extends ApplicationController
 
   function index()
   {
-    $meta_data = [
+    $page_info = [
       'page_title' => 'Home Page',
     ];
-    $this->render($this->view_directory, 'index', $meta_data);
+    $this->render($this->view_directory, 'index', $page_info);
   }
 
   function not_found()
   {
-    $meta_data = [
+    $page_info = [
       'page_title' => 'Page Not Found',
     ];
-    $this->render($this->view_directory, 'not_found', $meta_data);
+    $this->render($this->view_directory, 'not_found', $page_info);
   }
 }
