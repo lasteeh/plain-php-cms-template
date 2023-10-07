@@ -1,0 +1,43 @@
+@layer reset, base, layout, components, utilities, general;
+
+@layer reset {
+  :root {
+    --global-space: 1em;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  img,
+  picture {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  address {
+    word-break: break-all;
+  }
+}
