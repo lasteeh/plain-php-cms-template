@@ -10,9 +10,6 @@ define('ROUTES', [
   '/' => [
     'GET' => ['controller' => 'pages@index']  // homepage
   ],
-  '/settings' => [
-    'GET' => ['controller' => 'pages@settings']
-  ],
 
   // sessions 
   '/login' => [
