@@ -8,13 +8,13 @@ class ActionController
 
   protected $view_directory;
 
-  function __construct()
+  public function __construct()
   {
     // set the view sub directory of the controller
     $this->view_directory = strtolower(str_replace('Controller', '', get_class($this)));
   }
 
-  function render($page_info = [])
+  public function render($page_info = [])
   {
     // Use debug_backtrace() to get the calling function's name
     $backtrace = debug_backtrace();
@@ -40,7 +40,7 @@ class ActionController
     }
   }
 
-  function redirect($url)
+  public function redirect($url)
   {
     header("Location:" . ROOT_URL . "{$url}");
     exit();
