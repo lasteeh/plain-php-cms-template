@@ -8,7 +8,7 @@ class Database
   private $db_name = DB_NAME;
   private $pdo;
 
-  function __construct()
+  public function __construct()
   {
     try {
       $this->pdo = new PDO("mysql:host={$this->db_host};dbname={$this->db_name}", $this->db_username, $this->db_password);
@@ -18,7 +18,7 @@ class Database
     }
   }
 
-  function getPDO()
+  public function getPDO()
   {
     return $this->pdo;
   }
