@@ -18,6 +18,34 @@ class UsersController extends ApplicationController
 
   function create()
   {
-    $user = new User();
+    $user_params = $this->user_params($_POST);
+    $user = new User;
+    list($user, $error_messages) = $user->register($user_params);
+
+    if ($error_messages) {
+      var_dump($error_messages);
+    } else {
+      var_dump($user);
+    }
+
+    // if ($user->save()) {
+    // $this->redirect('/login');
+    // } else {
+    // $this->redirect('/signup');
+    // }
+  }
+
+  private function user_params($user_input)
+  {
+    $permitted_fields = ['email', 'password', 'password_confirmation'];
+    $user_params = [];
+
+    foreach ($permitted_fields as $field) {
+      if (isset($user_input[$field])) {
+        $user_params[$field] = $user_input[$field];
+      }
+    }
+
+    return $user_params;
   }
 }
