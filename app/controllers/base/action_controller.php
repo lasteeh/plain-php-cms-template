@@ -6,7 +6,7 @@ class ActionController
   const PARTIALS_DIRECTORY = 'app/views/partials';
   const LAYOUTS_DIRECTORY = 'app/views/layouts';
 
-  public $view_directory;
+  protected $view_directory;
 
   function __construct()
   {
