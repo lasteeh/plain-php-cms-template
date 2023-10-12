@@ -10,12 +10,18 @@ class ActionController
 
   function __construct()
   {
+    // set the view sub directory of the controller
     $this->view_directory = strtolower(str_replace('Controller', '', get_class($this)));
   }
 
-  function render($controller_name, $action, $page_info = [])
+  function render($page_info = [])
   {
-    $view_file = "app/views/{$controller_name}/{$action}.php";
+    // Use debug_backtrace() to get the calling function's name
+    $backtrace = debug_backtrace();
+    $callingFunction = $backtrace[1]['function'];
+    $action = $callingFunction;
+
+    $view_file = "app/views/{$this->view_directory}/{$action}.php";
 
     if (file_exists($view_file)) {
 

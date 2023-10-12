@@ -13,7 +13,7 @@ class UsersController extends ApplicationController
       'page_layout' => 'dashboard',
       'page_title' => 'Sign Up',
     ];
-    $this->render($this->view_directory, 'new', $page_info);
+    $this->render($page_info);
   }
 
   function create()
