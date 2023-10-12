@@ -42,7 +42,7 @@ class ActionController
 
   function redirect($url)
   {
-    header("Location: {$url}");
+    header("Location:" . ROOT_URL . "{$url}");
     exit();
   }
 
