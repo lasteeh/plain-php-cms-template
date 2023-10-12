@@ -7,8 +7,6 @@ require_once './app/models/user.php';
 
 class UsersController extends ApplicationController
 {
-  private $view_directory = 'users';
-
   function new()
   {
     $page_info = [

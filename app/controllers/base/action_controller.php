@@ -6,6 +6,13 @@ class ActionController
   const PARTIALS_DIRECTORY = 'app/views/partials';
   const LAYOUTS_DIRECTORY = 'app/views/layouts';
 
+  public $view_directory;
+
+  function __construct()
+  {
+    $this->view_directory = strtolower(str_replace('Controller', '', get_class($this)));
+  }
+
   function render($controller_name, $action, $page_info = [])
   {
     $view_file = "app/views/{$controller_name}/{$action}.php";

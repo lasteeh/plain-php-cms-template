@@ -4,8 +4,6 @@ require_once 'application_controller.php';
 
 class PagesController extends ApplicationController
 {
-  private $view_directory = 'pages';
-
   function index()
   {
     $page_info = [
