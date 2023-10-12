@@ -1,5 +1,5 @@
 <?php
-$excludedURLs = ['/login'];
+$excludedURLs = ['/login', '/signup'];
 ?>
 
 <!DOCTYPE html>

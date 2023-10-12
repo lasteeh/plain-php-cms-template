@@ -5,24 +5,21 @@ require_once 'application_controller.php';
 // require User model
 require_once './app/models/user.php';
 
-class SessionsController extends ApplicationController
+class UsersController extends ApplicationController
 {
-  private $view_directory = 'sessions';
+  private $view_directory = 'users';
 
   function new()
   {
     $page_info = [
       'page_layout' => 'dashboard',
-      'page_title' => 'Log In',
+      'page_title' => 'Sign Up',
     ];
     $this->render($this->view_directory, 'new', $page_info);
   }
 
-  // function create()
-  // {
-  // }
-
-  // function delete()
-  // {
-  // }
+  function create()
+  {
+    $user = new User();
+  }
 }

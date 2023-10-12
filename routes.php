@@ -20,6 +20,12 @@ define('ROUTES', [
     'DELETE' => ['controller' => 'sessions@delete'],
   ],
 
+  // users
+  '/signup' => [
+    'GET' => ['controller' => 'users@new'],
+    'POST' => ['controller' => 'users@create'],
+  ],
+
   // images
   '/images' => [
     'GET' => ['controller' => 'images@index'],
