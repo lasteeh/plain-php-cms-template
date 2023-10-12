@@ -16,3 +16,7 @@ define('ROOT_URL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . 
 define('SITE_NAME', 'A Plain PHP CMS Template');
 
 // db configuration
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'plain-php-cms-template');
+define('DB_USER', 'plain-php-cms-template');
+define('DB_PASSWORD', 'password');

@@ -6,14 +6,6 @@ class ActionController
   const PARTIALS_DIRECTORY = 'app/views/partials';
   const LAYOUTS_DIRECTORY = 'app/views/layouts';
 
-  private $model;
-
-  function __construct($model =  null)
-  {
-    $this->model = $model;
-  }
-
-
   function render($controller_name, $action, $page_info = [])
   {
     $view_file = "app/views/{$controller_name}/{$action}.php";
@@ -33,6 +25,12 @@ class ActionController
     } else {
       echo "{$view_file} not found.";
     }
+  }
+
+  function redirect($url)
+  {
+    header("Location: {$url}");
+    exit();
   }
 
   private function getLayoutConfiguration($page_layout)
