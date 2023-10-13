@@ -25,14 +25,8 @@ class UsersController extends ApplicationController
     if ($error_messages) {
       var_dump($error_messages);
     } else {
-      var_dump($user);
+      $this->redirect('/login');
     }
-
-    // if ($user->save()) {
-    // $this->redirect('/login');
-    // } else {
-    // $this->redirect('/signup');
-    // }
   }
 
   private function user_params($user_input)

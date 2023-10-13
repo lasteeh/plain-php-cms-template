@@ -18,8 +18,6 @@ class ActiveRecord
     $this->validations = $this->validations();
   }
 
-
-  // TODO: Fix SQL INSERT QUERY!!!
   public function save()
   {
     if (empty($this->attributes)) {
@@ -35,15 +33,13 @@ class ActiveRecord
       $param_values = [];
 
       foreach ($this->attributes as $key => $value) {
-        if ($key !== 'password_confirmation') {
-          $sql .= $key . ', ';
-          $values .= ":$key, ";
-          $param_values[":$key"] = $value;
-        }
+        $sql .= $key . ', ';
+        $values .= ':' . $key . ', ';
+        $param_values[":$key"] = $value;
       }
 
       // remove the trailing commas and spaces
-      $sql = rtrim($sql, ', ') . ')';
+      $sql = rtrim($sql, ', ') . ') ';
       $values = rtrim($values, ', ') . ')';
 
       $sql .= $values;
@@ -54,14 +50,14 @@ class ActiveRecord
 
         // bind parameters using the parameter values
         foreach ($param_values as $key => $value) {
-          $stmt->bindParam($key, $value);
+          $stmt->bindValue($key, $value);
         }
 
         $result = $stmt->execute();
 
         return $result;
       } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        $this->errors[] = $e->getMessage();
       }
     } else {
       echo 'validation failed';
@@ -95,7 +91,17 @@ class ActiveRecord
     $errors = [];
 
     foreach ($this->validations as $field => $rules) {
+      $data_type = PDO::PARAM_STR;
+
       foreach ($rules as $rule => $value) {
+        if ($rule === 'numericality' && isset($value['only_integer'])) {
+          if (!is_numeric($this->attributes[$field]) || !is_int($this->attributes[$field] + 0)) {
+            $data_type = PDO::PARAM_INT;
+
+            $errors[] = "{$field} must be a number.";
+          }
+        }
+
         if ($rule === 'presence' && $value === true) {
           if (empty($this->attributes[$field])) {
             $errors[] = "{$field} can't be blank.";
@@ -103,7 +109,10 @@ class ActiveRecord
         }
 
         if ($rule === 'uniqueness' && $value === true) {
-          //
+          $sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$field} = :{$field}";
+
+          $stmt = $this->db->getPDO()->prepare($sql);
+          $stmt->bindParam(':' . $field, $this->attributes[$field], $data_type);
         }
 
         if ($rule === 'length' && isset($value['minimum'])) {
@@ -122,6 +131,9 @@ class ActiveRecord
     }
 
     if (empty($errors)) {
+      // Remove 'password_confirmation' attribute if it exists
+      unset($this->attributes['password_confirmation']);
+
       return true;
     } else {
       $this->errors = $errors;
