@@ -22,7 +22,8 @@ class ImagesController extends ApplicationController
 
   function create()
   {
-    var_dump($_POST);
+    var_dump($_FILES['images']);
+    echo nl2br(PHP_EOL);
     // $this->redirect('/images');
   }
 
