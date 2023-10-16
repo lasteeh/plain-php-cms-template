@@ -4,6 +4,14 @@ require_once 'application_controller.php';
 
 class PagesController extends ApplicationController
 {
+  function dashboard()
+  {
+    $page_info = [
+      'page_title' => 'Dashboard',
+    ];
+    $this->render($page_info);
+  }
+
   function index()
   {
     $page_info = [

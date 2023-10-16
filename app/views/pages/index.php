@@ -1,1 +1,1 @@
-<h1>home page</h1>
+<h1>pages index page</h1>

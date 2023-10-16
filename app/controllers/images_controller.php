@@ -22,7 +22,8 @@ class ImagesController extends ApplicationController
 
   function create()
   {
-    $this->redirect('/images');
+    var_dump($_POST);
+    // $this->redirect('/images');
   }
 
   function delete()

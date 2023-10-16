@@ -24,7 +24,9 @@ if (file_exists($controller_file)) {
 
   if (method_exists($controller, $controller_action)) {
     if ($controller_name !== 'SessionsController') {
-      $controller->authenticate_request();
+      if ($controller_action !== 'not_found') {
+        $controller->authenticate_request();
+      }
     }
     $controller->$controller_action();
   } else {
