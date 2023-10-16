@@ -46,6 +46,19 @@ class User extends ApplicationRecord
 
   public function login($login_params)
   {
+    $user = $this->find_by_email($login_params['email']);
+
+    if ($user) {
+      if (password_verify($login_params['password'], $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
+
+        return [$user, null];
+      } else {
+        return [null, ['invalid password']];
+      }
+    } else {
+      return [null, ['invalid email']];
+    }
   }
 
   protected function hash_password()

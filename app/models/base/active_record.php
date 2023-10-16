@@ -85,6 +85,22 @@ class ActiveRecord
     return $record;
   }
 
+  public function find_by_email($email)
+  {
+    // build a SQL query to retrieve a record by its primary key
+    $sql = "SELECT * FROM {$this->table} WHERE email = :email";
+
+    // prepare and execute the query
+    $stmt = $this->db->getPDO()->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    // fetch the record as an associative array
+    $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $record;
+  }
+
   protected function validations()
   {
     return [];

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // initialize dependencies
 require_once 'config.php';
 require_once 'routes.php';
@@ -32,6 +34,7 @@ if (file_exists($controller_file)) {
   echo "{$controller_name} not found.";
 }
 
+// TODO: make a callback for before action controllers
 
 // reference: https://medium.com/@iamjoestack/how-to-build-a-custom-php-mvc-framework-e5a23da8f73d
 // reference: https://lancecourse.com/en/howto/how-to-start-your-own-php-mvc-framework-in-4-steps

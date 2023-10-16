@@ -2,9 +2,6 @@
 // include parent class ApplicationController
 require_once 'application_controller.php';
 
-// require User model
-require_once './app/models/user.php';
-
 class SessionsController extends ApplicationController
 {
   function new()
@@ -16,6 +13,7 @@ class SessionsController extends ApplicationController
     $this->render($page_info);
   }
 
+  // TODO: redirect to dashboard on successful login | also create views for dashboard
   function create()
   {
     $user_params = $this->login_params($_POST);
@@ -26,13 +24,16 @@ class SessionsController extends ApplicationController
     if ($error_messages) {
       var_dump($error_messages);
     } else {
-      $this->redirect('/dashboard');
+      $this->redirect('/');
     }
   }
 
-  // function delete()
-  // {
-  // }
+  function delete()
+  {
+    session_unset();
+    session_destroy();
+    $this->redirect('/login');
+  }
 
   private function login_params($user_input)
   {

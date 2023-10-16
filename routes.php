@@ -17,7 +17,7 @@ define('ROUTES', [
     'POST' => ['controller' => 'sessions@create'],
   ],
   '/logout' => [
-    'DELETE' => ['controller' => 'sessions@delete'],
+    'GET' => ['controller' => 'sessions@delete'],
   ],
 
   // users
