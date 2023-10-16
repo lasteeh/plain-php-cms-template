@@ -6,8 +6,6 @@ class ImagesController extends ApplicationController
 {
   function index()
   {
-    $this->authenticate_request();
-
     $page_info = [
       'page_title' => 'Images',
     ];

@@ -7,9 +7,6 @@ require_once 'config.php';
 require_once 'routes.php';
 require_once 'utilities/utilities.php';
 
-// for debugging (delete on polish)
-// echo nl2br(PHP_EOL .  'index.php running');
-
 // get controller and action
 $route_data = matchRoutesAndCollectData(HTTP_METHOD, SERVER_REQUEST_URI, ROUTES);
 $controller_name = ucfirst($route_data['controller']['name'] ?? 'Pages') . 'Controller';
@@ -26,6 +23,9 @@ if (file_exists($controller_file)) {
   $controller = new $controller_name;
 
   if (method_exists($controller, $controller_action)) {
+    if ($controller_name !== 'SessionsController') {
+      $controller->authenticate_request();
+    }
     $controller->$controller_action();
   } else {
     echo "{$controller_name} {$controller_action}() not found";
@@ -34,7 +34,8 @@ if (file_exists($controller_file)) {
   echo "{$controller_name} not found.";
 }
 
-// TODO: make a callback for before action controllers
+// for debugging. remove on polish
+var_dump($_SESSION);
 
 // reference: https://medium.com/@iamjoestack/how-to-build-a-custom-php-mvc-framework-e5a23da8f73d
 // reference: https://lancecourse.com/en/howto/how-to-start-your-own-php-mvc-framework-in-4-steps

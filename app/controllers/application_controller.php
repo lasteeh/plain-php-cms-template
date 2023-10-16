@@ -7,8 +7,8 @@ require_once './app/models/user.php';
 
 class ApplicationController extends ActionController
 {
-  protected $auth_required_pages = [
-    '/images'
+  protected $pages_requiring_authentication = [
+    '/images',
   ];
 
   protected function current_user()
@@ -25,7 +25,7 @@ class ApplicationController extends ActionController
 
   public function authenticate_request()
   {
-    if (!$this->current_user() || !in_array(SERVER_REQUEST_URI, $this->auth_required_pages)) {
+    if (!$this->current_user() && in_array(SERVER_REQUEST_URI, $this->pages_requiring_authentication)) {
       $this->redirect('/login');
     }
   }
