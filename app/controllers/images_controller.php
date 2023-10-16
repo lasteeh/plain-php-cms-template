@@ -11,4 +11,22 @@ class ImagesController extends ApplicationController
     ];
     $this->render($page_info);
   }
+
+  function new()
+  {
+    $page_info = [
+      'page_title' => 'Upload Image',
+    ];
+    $this->render($page_info);
+  }
+
+  function create()
+  {
+    $this->redirect('/images');
+  }
+
+  function delete()
+  {
+    $this->redirect('/images');
+  }
 }
