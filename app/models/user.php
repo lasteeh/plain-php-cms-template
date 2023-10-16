@@ -25,6 +25,13 @@ class User extends ApplicationRecord
     ];
   }
 
+  protected function before_save()
+  {
+    return [
+      'hash_password',
+    ];
+  }
+
   public function register($user_params)
   {
     $this->attributes = $user_params;
@@ -35,5 +42,14 @@ class User extends ApplicationRecord
       $error_messages = $this->errors;
       return [$this, $error_messages];
     }
+  }
+
+  public function login($login_params)
+  {
+  }
+
+  protected function hash_password()
+  {
+    $this->attributes['password'] = password_hash($this->attributes['password'], PASSWORD_BCRYPT);
   }
 }

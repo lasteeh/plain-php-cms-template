@@ -8,6 +8,7 @@ class ActiveRecord
   protected $attributes = [];
   protected $validations = [];
   protected $errors = [];
+  protected $before_save = [];
 
 
   public function __construct($model_object = [])
@@ -16,16 +17,20 @@ class ActiveRecord
     $this->table = strtolower(get_class($this)) . 's';
     $this->attributes = $model_object;
     $this->validations = $this->validations();
+    $this->before_save = $this->before_save();
   }
 
   public function save()
   {
     if (empty($this->attributes)) {
-      echo 'empty attributes';
       return false;
     }
 
     if ($this->validate()) {
+
+      // run callback functions
+      $this->run_before_save();
+
       // build the SQL query
       $sql = "INSERT INTO {$this->table} (";
       $values = "VALUES (";
@@ -60,7 +65,6 @@ class ActiveRecord
         $this->errors[] = $e->getMessage();
       }
     } else {
-      echo 'validation failed';
       return false;
     }
   }
@@ -98,7 +102,7 @@ class ActiveRecord
           if (!is_numeric($this->attributes[$field]) || !is_int($this->attributes[$field] + 0)) {
             $data_type = PDO::PARAM_INT;
 
-            $errors[] = "{$field} must be a number.";
+            $errors[] = "{$field} must be an integer.";
           }
         }
 
@@ -113,6 +117,14 @@ class ActiveRecord
 
           $stmt = $this->db->getPDO()->prepare($sql);
           $stmt->bindParam(':' . $field, $this->attributes[$field], $data_type);
+
+          $stmt->execute();
+
+          $count = $stmt->fetchColumn();
+
+          if ($count !== 0) {
+            $errors[] = $field . ' "' . $this->attributes[$field] . '" already exist.';
+          }
         }
 
         if ($rule === 'length' && isset($value['minimum'])) {
@@ -131,13 +143,25 @@ class ActiveRecord
     }
 
     if (empty($errors)) {
-      // Remove 'password_confirmation' attribute if it exists
+      // remove 'password_confirmation' attribute if it exists
       unset($this->attributes['password_confirmation']);
 
       return true;
     } else {
       $this->errors = $errors;
       return false;
+    }
+  }
+
+  protected function before_save()
+  {
+    return [];
+  }
+
+  private function run_before_save()
+  {
+    foreach ($this->before_save as $function) {
+      call_user_func([$this, $function]);
     }
   }
 }

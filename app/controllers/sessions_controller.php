@@ -16,11 +16,35 @@ class SessionsController extends ApplicationController
     $this->render($page_info);
   }
 
-  // function create()
-  // {
-  // }
+  function create()
+  {
+    $user_params = $this->login_params($_POST);
+    $user = new User();
+
+    list($user, $error_messages) = $user->login($user_params);
+
+    if ($error_messages) {
+      var_dump($error_messages);
+    } else {
+      $this->redirect('/dashboard');
+    }
+  }
 
   // function delete()
   // {
   // }
+
+  private function login_params($user_input)
+  {
+    $permitted_fields = ['email', 'password'];
+    $user_params = [];
+
+    foreach ($permitted_fields as $field) {
+      if (isset($user_input[$field])) {
+        $user_params[$field] = $user_input[$field];
+      }
+    }
+
+    return $user_params;
+  }
 }
