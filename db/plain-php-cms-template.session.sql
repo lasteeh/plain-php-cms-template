@@ -1,5 +1,5 @@
 -- @block 
-CREATE TABLE Users(
+CREATE TABLE Users (
     id INT AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -10,8 +10,36 @@ CREATE TABLE Users(
 );
 
 -- @block
-INSERT INTO Users (email, password)
-VALUES(
-    'admin@email.com',
-    'password'
+CREATE TABLE Images (
+    id INT AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    path VARCHAR(255),
+    uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+);
+
+-- @block
+CREATE TABLE Albums (
+    id INT AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+);
+
+-- @block
+CREATE TABLE Image_Albums (
+    id INT AUTO_INCREMENT,
+    image_id INT,
+    album_id INT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (image_id) REFERENCES Images (id),
+    FOREIGN KEY (album_id) REFERENCES Albums (id),
+    PRIMARY KEY (id)
 );

@@ -48,3 +48,5 @@ var_dump($_SESSION);
 // 2. create album creation
 // 3. create page management
 // 4. create html page builder
+// 5. build sqlbuilder
+// 6. build router & request models
