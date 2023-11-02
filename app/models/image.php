@@ -28,13 +28,15 @@ class Image extends ApplicationRecord
       while (file_exists($image_path)) {
         // If the file already exists, append an increment in parentheses
         $info = pathinfo($original_image_name);
-        $new_filename = $info['filename'] . "($counter)." . $info['extension'];
+        $new_filename = $info['filename'] . " ($counter)." . $info['extension'];
         $image_path = $this::UPLOAD_DIRECTORY . $new_filename;
         $counter++;
       }
 
       // Update the name attribute with the new filename
       $this->attributes['name'] = $new_filename;
+
+      $this->ensure_directory_exist($this::UPLOAD_DIRECTORY);
 
       if (move_uploaded_file($image_temp_name, $image_path)) {
         // successfully moved uploaded file to desired directory:
@@ -70,5 +72,18 @@ class Image extends ApplicationRecord
     $record = $this->find_by('name', $name);
 
     return $record;
+  }
+
+  private function ensure_directory_exist($directory_path)
+  {
+    if (is_dir($directory_path)) {
+      return;
+    } else {
+      if (mkdir($directory_path, 0777, true)) {
+        return;
+      } else {
+        $this->errors[] = ['Failed to create image uploads directory'];
+      }
+    }
   }
 }
