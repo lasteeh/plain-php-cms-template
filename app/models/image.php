@@ -12,14 +12,30 @@ class Image extends ApplicationRecord
 
     // first, check if the image was successfully uploaded
     $image_error = $this->attributes['error'];
-    $image_name = $this->attributes['name'];
+    $original_image_name = $this->attributes['name'];
 
     if ($image_error === UPLOAD_ERR_OK) {
       // successfully uploaded:
 
-      // next, move the uploaded file to desired directory
+      // next, move the uploaded file to the desired directory
       $image_temp_name = $this->attributes['tmp_name'];
-      $image_path = $this::UPLOAD_DIRECTORY . $image_name;
+      $image_path = $this::UPLOAD_DIRECTORY . $original_image_name;
+
+      // Check if the file already exists in the directory
+      $counter = 1;
+      $new_filename = $original_image_name; // Initialize new_filename here
+
+      while (file_exists($image_path)) {
+        // If the file already exists, append an increment in parentheses
+        $info = pathinfo($original_image_name);
+        $new_filename = $info['filename'] . "($counter)." . $info['extension'];
+        $image_path = $this::UPLOAD_DIRECTORY . $new_filename;
+        $counter++;
+      }
+
+      // Update the name attribute with the new filename
+      $this->attributes['name'] = $new_filename;
+
       if (move_uploaded_file($image_temp_name, $image_path)) {
         // successfully moved uploaded file to desired directory:
 
@@ -41,11 +57,18 @@ class Image extends ApplicationRecord
         }
       } else {
         // failed to move uploaded file:
-        return [$this, ['failed to move "' . $image_name . '"']];
+        return [$this, ['failed to move "' . $original_image_name . '"']];
       }
     } else {
       // error uploading image file:
-      return [$this, ['error uploading "' . $image_name . '"']];
+      return [$this, ['error uploading "' . $original_image_name . '"']];
     }
+  }
+
+  public function find_by_name($name)
+  {
+    $record = $this->find_by('name', $name);
+
+    return $record;
   }
 }
