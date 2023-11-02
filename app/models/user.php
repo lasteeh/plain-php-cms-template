@@ -65,4 +65,11 @@ class User extends ApplicationRecord
   {
     $this->attributes['password'] = password_hash($this->attributes['password'], PASSWORD_BCRYPT);
   }
+
+  public function find_by_email($email)
+  {
+    $record = $this->find_by('email', $email);
+
+    return $record;
+  }
 }

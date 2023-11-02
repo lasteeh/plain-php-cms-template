@@ -69,6 +69,22 @@ class ActiveRecord
     }
   }
 
+  public function find_by($column, $value)
+  {
+    // Build a SQL query to retrieve a record based on a specific column and value
+    $sql = "SELECT * FROM {$this->table} WHERE {$column} = :value";
+
+    // Prepare and execute the query
+    $stmt = $this->db->getPDO()->prepare($sql);
+    $stmt->bindParam(':value', $value);
+    $stmt->execute();
+
+    // Fetch the record as an associative array
+    $record = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $record;
+  }
+
   public function find($id)
   {
     // build a SQL query to retrieve a record by its primary key
@@ -77,22 +93,6 @@ class ActiveRecord
     // prepare and execute the query
     $stmt = $this->db->getPDO()->prepare($sql);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-    $stmt->execute();
-
-    // fetch the record as an associative array
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $record;
-  }
-
-  public function find_by_email($email)
-  {
-    // build a SQL query to retrieve a record by its primary key
-    $sql = "SELECT * FROM {$this->table} WHERE email = :email";
-
-    // prepare and execute the query
-    $stmt = $this->db->getPDO()->prepare($sql);
-    $stmt->bindParam(':email', $email);
     $stmt->execute();
 
     // fetch the record as an associative array
@@ -129,17 +129,10 @@ class ActiveRecord
         }
 
         if ($rule === 'uniqueness' && $value === true) {
-          $sql = "SELECT COUNT(*) FROM {$this->table} WHERE {$field} = :{$field}";
+          $existing_record = $this->find_by($field, $this->attributes[$field]);
 
-          $stmt = $this->db->getPDO()->prepare($sql);
-          $stmt->bindParam(':' . $field, $this->attributes[$field], $data_type);
-
-          $stmt->execute();
-
-          $count = $stmt->fetchColumn();
-
-          if ($count !== 0) {
-            $errors[] = $field . ' "' . $this->attributes[$field] . '" already exist.';
+          if ($existing_record) {
+            $errors[] = "{$field} '{$this->attributes[$field]}' already exists.";
           }
         }
 

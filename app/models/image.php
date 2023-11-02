@@ -26,11 +26,16 @@ class Image extends ApplicationRecord
         // then, save image details to db
         $this->attributes['path'] = $image_path;
 
+        // remove 'tmp_name' and 'error' attributes if they exist
+        unset($this->attributes['tmp_name']);
+        unset($this->attributes['error']);
+
         if ($this->save()) {
           // details saved to db:
           return [$this, null];
         } else {
           // failed to save to db:
+          unlink($image_path);
           $error_messages = $this->errors;
           return [$this, $error_messages];
         }

@@ -14,6 +14,8 @@ CREATE TABLE Images (
     id INT AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     path VARCHAR(255),
+    type VARCHAR(255),
+    size INT,
     uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -43,3 +45,4 @@ CREATE TABLE Image_Albums (
     FOREIGN KEY (album_id) REFERENCES Albums (id),
     PRIMARY KEY (id)
 );
+
