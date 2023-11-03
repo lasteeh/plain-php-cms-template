@@ -65,6 +65,7 @@ class ActionController
   public function dashboard()
   {
     $page_info = [
+      'page_layout' => 'dashboard',
       'page_title' => 'Dashboard',
     ];
     $this->render($page_info);

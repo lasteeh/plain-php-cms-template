@@ -10,6 +10,7 @@ class ImagesController extends ApplicationController
   function index()
   {
     $page_info = [
+      'page_layout' => 'dashboard',
       'page_title' => 'Images',
     ];
     $this->render($page_info);
@@ -18,6 +19,7 @@ class ImagesController extends ApplicationController
   function new()
   {
     $page_info = [
+      'page_layout' => 'dashboard',
       'page_title' => 'Upload Image',
     ];
     $this->render($page_info);
@@ -25,28 +27,23 @@ class ImagesController extends ApplicationController
 
   function create()
   {
-    var_dump($_FILES);
-    echo nl2br(PHP_EOL);
-    echo nl2br(PHP_EOL);
-
     $images_params = $this->images_params($_FILES);
 
-    $images_errors = [];
+    $error_messages = [];
 
     foreach ($images_params as $image_params) {
       $image = new Image;
-      list($image, $error_messages) = $image->upload($image_params);
+      list($image, $image_error_messages) = $image->upload($image_params);
 
-      if ($error_messages) {
-        $images_errors = array_merge($images_errors, $error_messages);
+      if ($image_error_messages) {
+        $error_messages = array_merge($error_messages, $image_error_messages);
       }
     }
 
-    var_dump($images_errors);
-    echo nl2br(PHP_EOL);
-    echo nl2br(PHP_EOL);
-    if (empty($images_errors)) {
-      // $this->redirect('/images');
+    if ($error_messages) {
+      var_dump($error_messages);
+    } else {
+      $this->redirect('/images');
     }
   }
 
