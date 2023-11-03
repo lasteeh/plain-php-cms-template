@@ -13,7 +13,9 @@
 <body>
   <?php include($header_file); ?>
 
-  <?php include($view_file); ?>
+  <main class="<?php echo isset($main_class) ? $main_class : ''; ?>">
+    <?php include($view_file); ?>
+  </main>
 
   <?php include($footer_file); ?>
 

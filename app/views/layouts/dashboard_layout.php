@@ -14,14 +14,16 @@ $excludedURLs = ['/login', '/signup'];
   <link rel="stylesheet" href="<?php echo ROOT_URL ?>/public/assets/stylesheets/dashboard_footer.css">
 </head>
 
-<body>
+<body data-layout="dashboard">
   <?php
   if (!in_array(SERVER_REQUEST_URI, $excludedURLs)) {
     include($header_file);
   }
   ?>
 
-  <?php include($view_file); ?>
+  <main class="<?php echo isset($main_class) ? $main_class : ''; ?>">
+    <?php include($view_file); ?>
+  </main>
 
   <?php
   if (!in_array(SERVER_REQUEST_URI, $excludedURLs)) {

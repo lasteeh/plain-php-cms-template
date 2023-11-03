@@ -33,6 +33,9 @@ class ActionController
       $footer_file = $layout_config['footer'];
 
       $layout_file = self::LAYOUTS_DIRECTORY . "/{$page_layout}_layout.php";
+      if (isset($page_info['main_class'])) {
+        $main_class = $page_info['main_class'];
+      }
 
       include  $layout_file;
     } else {
