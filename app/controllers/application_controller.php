@@ -7,7 +7,9 @@ require_once './app/models/user.php';
 
 class ApplicationController extends ActionController
 {
-  protected $allowed_pages = [];
+  protected $allowed_pages = [
+    '/',
+  ];
 
   protected function current_user()
   {
@@ -23,8 +25,10 @@ class ApplicationController extends ActionController
 
   public function authenticate_request()
   {
-    if (!$this->current_user() || in_array(SERVER_REQUEST_URI, $this->allowed_pages)) {
-      $this->redirect('/login');
+    if (!in_array(SERVER_REQUEST_URI, $this->allowed_pages)) {
+      if (!$this->current_user()) {
+        $this->redirect('/login');
+      }
     }
   }
 }

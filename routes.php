@@ -7,8 +7,11 @@ define('ROUTES', [
   // ], 
 
   // pages 
+  '/' => [
+    'GET' => ['controller' => 'application@index']
+  ],
   '/dashboard' => [
-    'GET' => ['controller' => 'pages@dashboard']
+    'GET' => ['controller' => 'application@dashboard']
   ],
 
   // sessions 

@@ -61,4 +61,27 @@ class ActionController
 
     return $layouts[$page_layout];
   }
+
+  public function dashboard()
+  {
+    $page_info = [
+      'page_title' => 'Dashboard',
+    ];
+    $this->render($page_info);
+  }
+
+  public function index()
+  {
+    $page_info = [
+      'page_title' => 'Home Page',
+    ];
+    $this->render($page_info);
+  }
+  public function not_found()
+  {
+    $page_info = [
+      'page_title' => 'Page Not Found',
+    ];
+    $this->render($page_info);
+  }
 }
