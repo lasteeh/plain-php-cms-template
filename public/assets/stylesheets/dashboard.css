@@ -1,0 +1,22 @@
+[data-layout="dashboard"] {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "aside  main"
+    "footer  footer";
+  grid-template-columns: minmax(auto, max-content) 1fr;
+  gap: var(--global-space);
+
+  & header {
+    grid-area: header;
+  }
+  & aside {
+    grid-area: aside;
+  }
+  & main {
+    grid-area: main;
+  }
+  & footer {
+    grid-area: footer;
+  }
+}

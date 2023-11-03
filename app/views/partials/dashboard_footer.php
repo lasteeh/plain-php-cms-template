@@ -1,1 +1,1 @@
-<footer>dashboard footer</footer>
+<!-- <footer>dashboard footer</footer> -->

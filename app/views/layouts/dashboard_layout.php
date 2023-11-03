@@ -22,6 +22,14 @@ $excludedURLs = ['/login', '/signup'];
   }
   ?>
 
+  <aside>
+    <nav>
+      <ul>
+        <li>nav item</li>
+      </ul>
+    </nav>
+  </aside>
+
   <main class="<?php echo isset($main_class) ? $main_class : ''; ?>">
     <?php include($view_file); ?>
   </main>
