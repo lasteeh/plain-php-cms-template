@@ -41,3 +41,9 @@
     word-break: break-all;
   }
 }
+
+@layer utilities {
+  .mt-auto {
+    margin-block-start: auto;
+  }
+}

@@ -1,7 +1,5 @@
 [data-layout="dashboard"] {
   & header {
     padding: calc(var(--global-space) / 1) calc(var(--global-space) / 1);
-
-    box-shadow: 0px 1px 4px 0px hsl(0, 0%, 0%, 0.1);
   }
 }
