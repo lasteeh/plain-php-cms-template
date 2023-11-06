@@ -25,6 +25,7 @@ $excludedURLs = ['/login', '/signup'];
   <aside>
     <nav>
       <ul>
+        <li><?php get_link('/dashboard', 'Dashboard'); ?></li>
         <li><?php get_link('/images', 'Images'); ?></li>
         <li><?php get_link('/albums', 'Albums'); ?></li>
         <li class="mt-auto"><?php get_link('/logout', 'Log Out'); ?></li>
