@@ -7,7 +7,6 @@ class SessionsController extends ApplicationController
   function new()
   {
     $page_info = [
-      'page_layout' => 'dashboard',
       'page_title' => 'Log In',
     ];
     $this->render($page_info);

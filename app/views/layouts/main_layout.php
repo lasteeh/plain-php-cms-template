@@ -1,3 +1,7 @@
+<?php
+$excludedURLs = ['/login', '/signup'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,13 +16,21 @@
 </head>
 
 <body>
-  <?php include($header_file); ?>
+  <?php
+  if (!in_array(SERVER_REQUEST_URI, $excludedURLs)) {
+    include($header_file);
+  }
+  ?>
 
   <main class="<?php echo isset($main_class) ? $main_class : ''; ?>">
     <?php include($view_file); ?>
   </main>
 
-  <?php include($footer_file); ?>
+  <?php
+  if (!in_array(SERVER_REQUEST_URI, $excludedURLs)) {
+    include($footer_file);
+  }
+  ?>
 
 </body>
 
