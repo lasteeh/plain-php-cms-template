@@ -5,36 +5,12 @@ session_start();
 // initialize dependencies
 require_once 'config/config.php';
 require_once 'config/routes.php';
-require_once 'utilities/utilities.php';
 
-// get controller and action
-$route_data = matchRoutesAndCollectData($_SERVER['REQUEST_METHOD'], SERVER_REQUEST_URI, ROUTES);
-$controller_name = ucfirst($route_data['controller']['name'] ?? 'Application') . 'Controller';
-$controller_action = $route_data['controller']['action'] ?? 'not_found';
-$route_parameter = $route_data['route_parameter'] ?? null;
+// initialize App
+require_once 'config/application.php';
+$app = new App;
+$app->run();
 
-
-$controller_file_name = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $controller_name));
-$controller_file = "app/controllers/{$controller_file_name}.php";
-
-if (file_exists($controller_file)) {
-  require_once $controller_file;
-
-  $controller = new $controller_name;
-
-  if (method_exists($controller, $controller_action)) {
-    if ($controller_name !== 'SessionsController') {
-      if ($controller_action !== 'not_found') {
-        $controller->authenticate_request();
-      }
-    }
-    $controller->$controller_action();
-  } else {
-    echo "{$controller_name} {$controller_action}() not found";
-  }
-} else {
-  echo "{$controller_name} not found.";
-}
 
 // for debugging. remove on polish
 var_dump($_SESSION);
