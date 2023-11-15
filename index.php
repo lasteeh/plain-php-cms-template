@@ -8,7 +8,7 @@ require_once 'config/routes.php';
 require_once 'utilities/utilities.php';
 
 // get controller and action
-$route_data = matchRoutesAndCollectData(HTTP_METHOD, SERVER_REQUEST_URI, ROUTES);
+$route_data = matchRoutesAndCollectData($_SERVER['REQUEST_METHOD'], SERVER_REQUEST_URI, ROUTES);
 $controller_name = ucfirst($route_data['controller']['name'] ?? 'Application') . 'Controller';
 $controller_action = $route_data['controller']['action'] ?? 'not_found';
 $route_parameter = $route_data['route_parameter'] ?? null;

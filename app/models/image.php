@@ -4,7 +4,7 @@ require_once 'application_record.php';
 
 class Image extends ApplicationRecord
 {
-  const UPLOAD_DIRECTORY = ROOT_PATH . '/public/uploads/images/';
+  const UPLOAD_DIRECTORY = ROOT_DIR . '/public/uploads/images/';
 
   public function upload($image_params)
   {
