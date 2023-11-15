@@ -3,7 +3,7 @@
 session_start();
 
 // initialize dependencies
-require_once 'config.php';
+require_once 'config/config.php';
 require_once 'config/routes.php';
 require_once 'utilities/utilities.php';
 
